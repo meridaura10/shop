@@ -1,0 +1,117 @@
+[90m= [39m[34;4mIlluminate\Database\Eloquent\Collection[39;24m {#6074
+    [34mall[39m: [
+      [34;4mApp\Models\Order[39;24m {#6296
+        [34mid[39m: [35m15[39m,
+        [34mamount[39m: "[32m521683.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m7795 Bosco Vista Apt. 642[39m\n
+          [32mLubowitzport, NC 54989[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "abagail.reinger@hotmail.com", "phone": "+1 (678) 863-5048", "last_name": "Borer", "first_name": "Zoie"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:54[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6297
+        [34mid[39m: [35m18[39m,
+        [34mamount[39m: "[32m423035.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m326 Batz Green[39m\n
+          [32mBettyehaven, MD 52203-8597[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "schneider.rosendo@yahoo.com", "phone": "+1.209.444.4028", "last_name": "Haley", "first_name": "Heath"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:54[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6298
+        [34mid[39m: [35m26[39m,
+        [34mamount[39m: "[32m321471.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m83316 Avis Plaza[39m\n
+          [32mWest Robertburgh, HI 03773-2113[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "ondricka.burdette@goodwin.com", "phone": "1-757-996-1206", "last_name": "Greenholt", "first_name": "Anastacio"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:54[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6299
+        [34mid[39m: [35m27[39m,
+        [34mamount[39m: "[32m559237.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m79502 Bode Greens Suite 714[39m\n
+          [32mSouth Jerrod, TN 20835-3139[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "maximo75@yahoo.com", "phone": "(484) 516-8768", "last_name": "Hackett", "first_name": "Mohammed"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:54[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6300
+        [34mid[39m: [35m39[39m,
+        [34mamount[39m: "[32m222870.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m78359 Chasity Wall[39m\n
+          [32mNorth Einomouth, NC 95880[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "mflatley@yahoo.com", "phone": "531-747-5521", "last_name": "Homenick", "first_name": "Alexandria"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:54[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6301
+        [34mid[39m: [35m57[39m,
+        [34mamount[39m: "[32m223915.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m2166 Dejah Junctions Suite 630[39m\n
+          [32mBatzburgh, NE 23970-3077[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "jones.zola@hotmail.com", "phone": "712-913-1931", "last_name": "Langosh", "first_name": "Bertrand"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:55[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6302
+        [34mid[39m: [35m66[39m,
+        [34mamount[39m: "[32m842584.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m20100 Ignacio Alley Suite 813[39m\n
+          [32mDietrichbury, CA 43036[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "baumbach.cortney@hotmail.com", "phone": "330.931.5298", "last_name": "Fisher", "first_name": "Baby"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:55[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+      [34;4mApp\Models\Order[39;24m {#6303
+        [34mid[39m: [35m91[39m,
+        [34mamount[39m: "[32m196285.00[39m",
+        [34mstatus[39m: "[32mpending[39m",
+        [34mtype[39m: "[32mbasket[39m",
+        [34maddress[39m: """
+          [32m5414 Stark Roads Apt. 800[39m\n
+          [32mSouth Laurybury, CO 22635-9319[39m
+          """,
+        [34mcustomer[39m: "[32m{"email": "jules.schinner@langworth.com", "phone": "+1-419-293-4735", "last_name": "Crooks", "first_name": "Katelin"}[39m",
+        [34mcreated_at[39m: "[32m2025-08-01 12:45:53[39m",
+        [34mupdated_at[39m: "[32m2025-08-01 12:45:55[39m",
+        [34muser_id[39m: [35m1[39m,
+      },
+    ],
+  }
+
