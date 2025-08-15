@@ -7,6 +7,8 @@ use App\Models\Attribute;
 use App\Models\Brand;
 use App\Models\Category;
 use App\Models\Characteristic;
+use App\Models\Distribution;
+use App\Models\Lead;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Review;
@@ -23,18 +25,22 @@ class DummySeeder extends Seeder
     {
         User::factory()->count(10)->create();
 
-        Brand::factory()->count(10)->create();
-        Category::factory()->count(25)->create();
+     //   Brand::factory()->count(10)->create();
+     //   Category::factory()->count(25)->create();
 
-        Attribute::factory()->count(8)->create();
-        Characteristic::factory()->count(100)->create();
+        Attribute::factory()->count(10)->create();
+        Characteristic::factory()->count(40)->create();
 
-        Product::factory()->count(100)->create();
+        Product::factory()->count(50)->create();
 
-        Order::factory()->count(100)->create();
+        Order::factory()->count(30)->create();
 
-        Article::factory()->count(100)->create();
+        Article::factory()->count(10)->create();
 
-        Review::factory()->count(100)->create();
+        Review::factory()->count(10)->create();
+
+        Lead::factory()->count(1)->create();
+
+        Distribution::factory()->count(3)->create();
     }
 }

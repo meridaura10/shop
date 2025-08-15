@@ -2,19 +2,24 @@
 
 namespace App\Models;
 
+use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
+use Spatie\MediaLibrary\MediaCollections\Models\Media;
+use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Purchase extends Model
+class Purchase extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\PurchasesFactory> */
-    use HasFactory;
+    use HasFactory, InteractsWithMedia;
 
     protected $guarded = ['id'];
 
     protected $appends = ['amount'];
+
+    protected $mediaSingleCollections = ['image'];
 
     public function product(): BelongsTo
     {
@@ -31,5 +36,15 @@ class Purchase extends Model
         return Attribute::make(
             get: fn () => round($this->price * $this->quantity,2),
         );
+    }
+
+    public function customMediaConversions(Media $media = null): void
+    {
+        $this->addMediaCollection('main')
+            ->singleFile();
+
+        $this->addMediaConversion('table')
+            ->format('jpg')->quality(93)
+            ->fit('crop', 360, 257);
     }
 }

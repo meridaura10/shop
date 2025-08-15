@@ -14,13 +14,13 @@ return new class extends Migration
     {
         Schema::create('categories', function (Blueprint $table) {
             $table->id();
-            $table->string('name')->nullable();
-            $table->string('slug')->nullable();
+            $table->string('name')->index()->nullable();
+            $table->string('slug')->unique()->index()->nullable();
             $table->string('description')->nullable();
             $table->string('type')->nullable();
+            $table->string('status')->nullable();
             $table->integer('weight')->default(0);
-            $table->unsignedBigInteger('parent_id')->nullable();
-            $table->foreign('parent_id')->references('id')->on('categories')->onDelete('cascade');
+            $table->nestedSet();
             $table->timestamps();
         });
     }

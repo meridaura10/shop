@@ -3,7 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Attribute;
-use App\Models\Category;
+use App\Models\Term;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,8 +26,7 @@ class AttributeFactory extends Factory
     public function configure(): static
     {
        return $this->afterCreating(function (Attribute $attribute) {
-          $categories = Category::query()
-              ->where('type',Category::TYPE_PRODUCT)
+          $categories = Term::whereProductCategories()
               ->take(rand(5,15))
               ->pluck('id');
 

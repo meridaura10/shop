@@ -1,0 +1,307 @@
+.va-center, .table>tbody>tr>td.va-center, .table>tbody>tr.va-center>td {
+	vertical-align: middle;
+}
+.ha-center, .table>tbody>tr>td.ha-center, .table>tbody>tr.ha-center>td {
+	text-align: center;
+}
+.vha-center, .table>tbody>tr>td.vha-center, .table>tbody>tr.vha-center>td {
+	vertical-align: middle;
+	text-align: center;
+}
+
+.table img.table-avatar {
+    border-radius: 50%;
+    display: inline;
+    width: 2.5rem;
+}
+
+a.hover-edit {
+    color: inherit;
+    text-decoration: none;
+}
+.hover-edit:after {
+    position: absolute;
+}
+.hover-edit:hover:after {
+    padding-left: 5px;
+    content: '✎';
+}
+
+.js-clipboard {
+    cursor: pointer;
+}
+.js-clipboard:after {
+    position: absolute;
+}
+.js-clipboard.with-mark:hover:after {
+    padding-left: 5px;
+    content: '✔';
+}
+
+.js-blur-text {
+    filter: blur(3px);
+    cursor: pointer;
+    transition: filter 0.4s ease;
+}
+
+.js-blur-text.revealed {
+    filter: none;
+}
+
+/* jQuery Sortable Nested */
+body.dragging, body.dragging * {
+    cursor: move !important;
+}
+
+.dragged {
+    position: absolute;
+    opacity: 0.5;
+    z-index: 2000;
+}
+
+ul.js-sortable-nested li.placeholder {
+    position: relative;
+    border-bottom: 1px solid black;
+    height: 15px;
+    /** More li styles **/
+}
+
+ul.js-sortable-nested li.placeholder:before {
+    position: absolute;
+    /** Define arrowhead **/
+}
+
+.todo-list.js-sortable-nested ul li {
+    list-style-type: none;
+    margin-top: 5px;
+}
+
+.todo-list.js-sortable-nested li .tools a {
+    padding-right: 5px;
+}
+
+.todo-list.js-sortable-nested li a.text {
+    color: #495057;
+}
+
+.dark-mode .todo-list.js-sortable-nested li a.text {
+    color: #fff;
+}
+
+.dark-mode .node-:not(.node-disabled):hover {
+    background-color: #3f6791;
+}
+
+.content-header h1>small {
+    font-size: 1rem;
+    opacity: 0.6;
+}
+
+.btn-lte-fixed {
+    font-size: 14px;
+    position: fixed;
+    top: 125px;
+    right: 0;
+    border-radius: 5px 0 0 5px;
+    opacity: .4;
+    z-index: 100;
+}
+
+.btn-lte-fixed:hover {
+    display: flex;
+    align-items: center;
+}
+
+.btn-lte-fixed:hover .table__options-text {
+    display: block;
+    opacity: .9;
+}
+
+.btn-lte-fixed:hover {
+    opacity: .9;
+}
+
+.btn-group-tokens {
+    position: absolute;
+    bottom: 7px;
+    right: 10px;
+    background-color: transparent !important;
+}
+
+.lte-pointer:hover {
+    cursor: pointer;
+}
+
+.cursor-move {
+    cursor: move;
+}
+.lte-n-resize:hover {
+    cursor: n-resize;
+}
+.lte-all-scroll:hover {
+    cursor: all-scroll;
+}
+
+.form-group.row .custom-control-label {
+    margin-right: 10px;
+}
+
+.mfp-wrap {
+    z-index: 1051;
+}
+
+details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: 0.5em 0.5em 0;
+}
+
+summary {
+    font-weight: bold;
+    margin: -0.5em -0.5em 0;
+    padding: 0.5em;
+}
+details[open] {
+    padding: 0.5em;
+}
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: 0.5em;
+}
+.lte-modal-show img {
+    max-width: 100%;
+}
+
+.f-multyitems .f-item {
+    border: 1px solid #b5b6b7;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+}
+
+.btn-actions.dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.lte-sort-link {
+    color: #2124B9;
+}
+.dark-mode .lte-sort-link, .dark-mode .navbar-nav a {
+    color: cornflowerblue;
+}
+
+.lte-table-tr-bg {
+    background-color: azure;
+    height: 42px
+}
+.dark-mode .lte-table-tr-bg {
+    background-color: dimgrey;
+}
+
+.lte-filter-searched {
+    background-color: yellow;
+}
+.dark-mode .lte-filter-searched {
+    background-color: darkorange;
+}
+
+.content-header .content-header-search {
+    display: inline-block;
+    margin-bottom: 0;
+}
+
+.table__options-wrapper {
+    position: fixed;
+    top: 140px;
+    right: 0;
+    z-index: 100;
+}
+
+.table__options-button {
+    display: flex;
+    align-items: center;
+    padding: 10px 10px;
+    transition: width 0.3s ease;
+    opacity: .4;
+    background-color: #007bff;
+    border: none;
+    border-radius: 5px 0 0 5px;
+    font-size: 14px;
+    color: #fff;
+    cursor: pointer;
+}
+
+.dark-mode .table__options-button {
+    color: #fff;
+    background-color: #3f6791;
+    border-color: #3f6791;
+    box-shadow: none;
+}
+
+.dark-mode .table__options-button:hover {
+    color: #fff;
+    background-color: #335476;
+    border-color: #304e6d;
+}
+
+.table__options-text {
+    display: none;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+    margin-left: 10px;
+    font-size: 13px;
+}
+
+.table__options-icon {
+    width: 18px;
+    height: 18px;
+    font-size: 18px;
+}
+
+.table__options-wrapper:hover .table__options-text {
+    display: block;
+    opacity: .9;
+}
+
+.table__options-wrapper:hover .table__options-button {
+    color: #fff;
+}
+
+.table__options-button:hover {
+    opacity: .9;
+    background-color: #007bff;
+}
+
+@media (max-width: 640px) {
+    .content-header .content-header-search {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .navbar-expand .navbar-nav .nav-link {
+        padding-right: 5px;
+        padding-left: 15px;
+    }
+    .navbar-expand .navbar-nav .nav-link .nav-item-title {
+        display: none;
+    }
+}
+
+.dark-mode .lte-text, .dark-mode .lte-text a {
+    color: white;
+}
+.lte-text, .lte-text a {
+    color: #212529;
+}
+
+.dark-mode img.avatar-border {
+    border: 2px solid #394046;
+}
+img.avatar-border {
+    border: 2px solid #f7f7f7;
+    border-radius: 50%;
+}
+
+.dark-mode .navbar .input-group-append .btn.btn-navbar {
+    background: white;
+    border-color: #ced4da;
+}

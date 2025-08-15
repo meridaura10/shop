@@ -11,12 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('attribute_category', function (Blueprint $table) {
-            $table->id();
-            $table->foreignIdFor(\App\Models\Attribute::class)->Constrained()->cascadeOnDelete();
-            $table->foreignIdFor(\App\Models\Category::class)->Constrained()->cascadeOnDelete();
-            $table->timestamps();
-        });
+
     }
 
     /**

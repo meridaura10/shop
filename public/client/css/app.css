@@ -1,0 +1,19 @@
+
+.product_categories-list {
+    opacity: 0;
+    max-height: 0;
+    overflow: hidden;
+    transition: opacity 0.6s ease, max-height 0.3s ease;
+    padding: 0;
+    margin: 0;
+    border: 1px gray;
+}
+
+.product__item:hover .product_categories-list {
+    opacity: 1;
+    max-height: 100vh;
+}
+
+.product_categories-list li {
+    padding: 5px 10px;
+}

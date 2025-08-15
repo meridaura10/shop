@@ -25,6 +25,17 @@ trait HasStaticLists
             });
         }
 
+        if($associative = $options['is_associative'] ?? null){
+            $arr = [];
+
+            foreach($records as $key => $record){
+                $arr[$key][$associative[0]] = $record[$columnKey];
+                $arr[$key][$associative[1]] = $record[$indexKey];
+            }
+
+            return $arr;
+        }
+
         if ($indexKey && $columnKey) {
             if ($columnKey === '*' || $columnKey === ['*']) {
                 return array_combine(array_column($records, $indexKey), $records);

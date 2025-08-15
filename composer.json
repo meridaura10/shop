@@ -7,11 +7,28 @@
     "license": "MIT",
     "require": {
         "php": "^8.2",
+        "daaner/turbosms": "^1.40",
+        "fomvasss/laravel-lte3": "^1.82",
+        "fomvasss/laravel-medialibrary-extension": "^6.2",
+        "fomvasss/laravel-notification-channel-turbo-sms": "^1.4",
+        "fomvasss/laravel-simple-taxonomy": "^1.6",
+        "ka4ivan/laravel-view-sortable": "^1.1",
+        "kalnoy/nestedset": "^6.0",
         "laravel/framework": "^12.0",
-        "laravel/tinker": "^2.10.1"
+        "laravel/tinker": "^2.10.1",
+        "laravel/ui": "^4.6",
+        "laravolt/avatar": "^6.2",
+        "lorisleiva/laravel-actions": "^2.9",
+        "maatwebsite/excel": "^3.1",
+        "rap2hpoutre/laravel-log-viewer": "^2.5",
+        "spatie/laravel-medialibrary": "^11.13",
+        "spatie/laravel-permission": "^6.21"
     },
     "require-dev": {
+        "almasaeed2010/adminlte": "^3.2",
+        "barryvdh/laravel-debugbar": "^3.16",
         "fakerphp/faker": "^1.23",
+        "laravel-lang/lang": "^15.22",
         "laravel/pail": "^1.2.2",
         "laravel/pint": "^1.13",
         "laravel/sail": "^1.41",
@@ -20,6 +37,9 @@
         "phpunit/phpunit": "^11.5.3"
     },
     "autoload": {
+        "files": [
+            "app/helpers.php"
+        ],
         "psr-4": {
             "App\\": "app/",
             "Database\\Factories\\": "database/factories/",

@@ -16,15 +16,16 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable();
-            $table->string('slug')->nullable();
-            $table->string('description')->nullable();
+            $table->string('slug')->unique()->index()->nullable();
+            $table->longText('description')->nullable();
             $table->decimal('old_price',)->default(0);
             $table->decimal('price',)->default(0);
             $table->integer('quantity')->default(0);
+            $table->string('status')->nullable();
             $table->timestamps();
 
-            $table->foreignIdFor(Brand::class)->nullable()->constrained()->nullOnDelete();
-            $table->foreignIdFor(Category::class)->nullable()->constrained()->nullOnDelete();
+            $table->foreignId('brand_id')->nullable()->constrained('terms')->nullOnDelete();
+            $table->foreignId('category_id')->nullable()->constrained('terms')->nullOnDelete();
         });
     }
 

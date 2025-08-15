@@ -20,6 +20,10 @@ class Review extends Model
 
     const TYPE_PRODUCT = 'product';
 
+    const STATUS_PUBLISHED = 'published';
+
+    const STATUS_UNPUBLISHED = 'unpublished';
+
     protected $attributes = [
       'status' => self::STATUS_PENDING,
       'type' => self::TYPE_PRODUCT,
@@ -53,6 +57,22 @@ class Review extends Model
                 'name' => trans('lists.order_statuses.' . self::TYPE_PRODUCT . '.name'),
             ],
 
+        ];
+
+        return self::staticListBuild($records, $columnKey, $indexKey, $options);
+    }
+
+    public static function statusesList(string $columnKey = null, string $indexKey = null, array $options = []): array
+    {
+        $records = [
+            [
+                'key' => self::STATUS_PUBLISHED,
+                'name' => trans('lists.reviews_statuses.' . self::STATUS_PUBLISHED . '.name'),
+            ],
+            [
+                'key' => self::STATUS_UNPUBLISHED,
+                'name' => trans('lists.reviews_statuses.' . self::STATUS_UNPUBLISHED . '.name'),
+            ],
         ];
 
         return self::staticListBuild($records, $columnKey, $indexKey, $options);

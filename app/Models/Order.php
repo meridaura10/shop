@@ -17,6 +17,10 @@ class Order extends Model
 
     const STATUS_PENDING = 'pending';
 
+    const STATUS_PROCESSING = 'processing';
+
+    const STATUS_CONFIRMED = 'confirmed';
+
     const TYPE_ORDER = 'order';
 
     const TYPE_BASKET = 'basket';
@@ -62,6 +66,10 @@ class Order extends Model
             [
                 'key' => self::STATUS_PENDING,
                 'name' => trans('lists.order_statuses.' . self::STATUS_PENDING . '.name'),
+            ],
+            [
+                'key' => self::STATUS_CONFIRMED,
+                'name' => trans('lists.order_statuses.' . self::STATUS_CONFIRMED . '.name'),
             ],
         ];
 

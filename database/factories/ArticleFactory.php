@@ -4,6 +4,7 @@ namespace Database\Factories;
 
 use App\Models\Article;
 use App\Models\Category;
+use App\Models\Term;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -18,8 +19,7 @@ class ArticleFactory extends Factory
      */
     public function definition(): array
     {
-        $category_id = Category::query()
-            ->where('type', Category::TYPE_ARTICLE)
+        $category_id = Term::whereArticleCategories()
             ->inRandomOrder()
             ->first()
             ->id;

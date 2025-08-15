@@ -19,7 +19,7 @@ class ReviewFactory extends Factory
     public function definition(): array
     {
         $type = $this->faker->randomElement(Review::typesList('key'));
-
+        $status = $this->faker->randomElement(Review::statusesList('key'));
         $relation = [];
 
         if($type == Review::TYPE_PRODUCT) {
@@ -33,6 +33,7 @@ class ReviewFactory extends Factory
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
             'type' => $type,
+            'status' => $status,
             ...$relation
         ];
     }
