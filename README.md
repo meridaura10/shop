@@ -1,10 +1,40 @@
-1. Задати конфг NGINX для проекту
-2. Додати запис хостів у файл  sudo nano /etc/hosts 
-3. перезапустити nginx docker compose restart nginx
-4. зайти в контейнер dcexec
-5. зайти в проект та виконати команду composer i 
-6. додати .env файл
+# Shop Laravel Project
 
+## Підготовка середовища
+
+### 1. Налаштування NGINX
+- Додайте конфігурацію для вашого проекту в NGINX.
+
+### 2. Додати запис у hosts
+```bash
+sudo nano /etc/hosts
+```
+Додайте рядок з вашим локальним або ngrok-доменом.
+
+### 3. Перезапуск NGINX
+```bash
+docker compose restart nginx
+```
+
+### 4. Зайти в контейнер workspace
+```bash
+dcexec
+```
+
+### 5. Перейти до проекту для mac
+```bash
+cd /Users/admin/Work/laravel/shop2
+```
+
+### 6. Встановити залежності
+```bash
+composer install
+```
+
+### 7. Додати файл `.env`
+Створіть `.env` на основі `.env.example` та додайте налаштування:
+
+```dotenv
 APP_NAME=Shop
 APP_ENV=local
 APP_KEY=base64:oboZOqiiuU8bYv6YwzUh+8+VT1akJsSamqI0FKO5CPE=
@@ -16,8 +46,7 @@ APP_FALLBACK_LOCALE=en
 APP_FAKER_LOCALE=en_US
 
 APP_MAINTENANCE_DRIVER=file
-# APP_MAINTENANCE_STORE=database
-
+APP_MAINTENANCE_STORE=database
 PHP_CLI_SERVER_WORKERS=4
 
 BCRYPT_ROUNDS=12
@@ -45,8 +74,7 @@ FILESYSTEM_DISK=local
 QUEUE_CONNECTION=database
 
 CACHE_STORE=file
-# CACHE_PREFIX=
-
+CACHE_PREFIX=
 MEMCACHED_HOST=127.0.0.1
 
 REDIS_CLIENT=phpredis
@@ -71,7 +99,6 @@ GITHUB_CLIENT_ID=ff46499f4e63aa6170fc
 GITHUB_CLIENT_SECRET=0d0f49339443d6098c4c21b052601188f89f7df0
 GITHUB_REDIRECT_URL=https://thankful-just-termite.ngrok-free.app/github/login/callback
 
-
 AWS_ACCESS_KEY_ID=
 AWS_SECRET_ACCESS_KEY=
 AWS_DEFAULT_REGION=us-east-1
@@ -80,10 +107,20 @@ AWS_USE_PATH_STYLE_ENDPOINT=false
 
 NGROK_URL=https://thankful-just-termite.ngrok-free.app
 
-
 VITE_APP_NAME="${APP_NAME}"
+```
 
-7. виконати команду php artisan migrate 
-8. прописати php artisan db:seed --class=PrimarySeeder
-9. для додання тестових данних можна написати db:seed --classDummySeeder
+### 8. Міграції бази даних можна дописати --seed що додасть як основні так і фейкові данні
+```bash
+php artisan migrate
+```
 
+### 9. Наповнення бази даних
+- Основні дані:
+```bash
+php artisan db:seed --class=PrimarySeeder
+```
+- Тестові дані:
+```bash
+php artisan db:seed --class=DummySeeder
+```
