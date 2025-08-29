@@ -16,7 +16,7 @@ class AttributeRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'categories' => ['array'],
-            'categories.*' => ['integer', 'exists:categories,id'],
+            'categories.*' => ['integer', 'exists:terms,id'],
         ];
     }
 }
