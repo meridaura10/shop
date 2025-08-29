@@ -73,6 +73,11 @@ class RegisterController extends Controller
 
     public function showRegistrationForm(): View
     {
+        return view('client.auth.register');
+    }
+
+    public function showAdminRegistrationForm(): View
+    {
         return view('admin.auth.register');
     }
 }

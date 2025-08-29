@@ -3,9 +3,8 @@
 namespace App\Http\Admin\Controllers;
 
 use App\Events\ConfirmOrder;
+use App\Http\Admin\Requests\OrderRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\OrderRequest;
-use App\Listeners\NotifyAdminsOnUserRegistered;
 use App\Models\Order;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;

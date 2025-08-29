@@ -21,6 +21,10 @@ class CreateNewProduct
 
         $product->characteristics()->sync($data['characteristics'] ?? []);
 
+        if ($data['seo'] && count($data['seo'])) {
+            $product->seo()->updateOrCreate([], ['tags' => $data['seo']]);
+        }
+
         return $product;
     }
 }

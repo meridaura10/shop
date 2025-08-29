@@ -9,7 +9,7 @@ trait HasSlug
     public static function bootHasSlug(): void
     {
         static::saving(function (Model $model) {
-                $slug = $model->slug ?? str()->slug(static::getTextToSlugGenerate($model));
+                $slug = $model->slug ? $model->slug : str()->slug(static::getTextToSlugGenerate($model)) ?? $model->id;
                 $originalSlug = $slug;
 
                 $i = 1;
@@ -35,6 +35,6 @@ trait HasSlug
             return $model->{$model->slugSource};
         }
 
-        return $model->name;
+        return $model->name ? $model->name : uuid_create();
     }
 }

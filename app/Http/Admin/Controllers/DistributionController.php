@@ -2,8 +2,8 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\DistributionRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\DistributionRequest;
 use App\Models\Distribution;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;

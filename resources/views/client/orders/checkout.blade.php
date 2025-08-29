@@ -1,88 +1,112 @@
 @extends('client.layouts.app')
 
+@push('styles')
+    <style>
+        .region-wrapper{
+            display: none;
+        }
+        .city-wrapper{
+            display: none;
+        }
+        .city_region-wrapper{
+            display: none;
+        }
+    </style>
+@endpush
+
 @section('content')
     <section class="checkout spad">
         <div class="container">
             <div class="checkout__form">
-                <form action="#">
+                <form method="post" action="{{ route('checkout.store') }}">
+                    @method('POST')
+                    @csrf
+                    @error('order')
+                    <div class="p-4 row">
+                        <div style="width: 100%;">
+                            <div style="background: indianred" class="p-4">
+                                <p class="text-center" style="color: white">
+                                    {{ $message }}
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    @enderror
                     <div class="row">
                         <div class="col-lg-8 col-md-6">
-                            <h6 class="coupon__code"><span class="icon_tag_alt"></span> Have a coupon? <a href="#">Click
-                                    here</a> to enter your code</h6>
                             <h6 class="checkout__title">Billing Details</h6>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Fist Name<span>*</span></p>
-                                        <input type="text">
+                                        <input name="customer[first_name]" type="text" value="{{ old('customer.first_name') }}" class="@error('customer.first_name') is-invalid @enderror">
+                                        @error('customer.first_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Last Name<span>*</span></p>
-                                        <input type="text">
+                                        <input name="customer[last_name]" type="text">
+                                        @error('customer.last_name')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Address<span>*</span></p>
-                                <input type="text" placeholder="Street Address" class="checkout__input__add">
-                                <input type="text" placeholder="Apartment, suite, unite ect (optinal)">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Town/City<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Country/State<span>*</span></p>
-                                <input type="text">
-                            </div>
-                            <div class="checkout__input">
-                                <p>Postcode / ZIP<span>*</span></p>
-                                <input type="text">
                             </div>
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Phone<span>*</span></p>
-                                        <input type="text">
+                                        <input name="customer[phone]" type="number">
+                                        @error('customer.phone')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                                 <div class="col-lg-6">
                                     <div class="checkout__input">
                                         <p>Email<span>*</span></p>
-                                        <input type="text">
+                                        <input name="customer[email]" type="text">
+                                        @error('customer.email')
+                                        <span class="text-danger">{{ $message }}</span>
+                                        @enderror
                                     </div>
                                 </div>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="acc">
-                                    Create an account?
-                                    <input type="checkbox" id="acc">
-                                    <span class="checkmark"></span>
-                                </label>
-                                <p>Create an account by entering the information below. If you are a returning customer
-                                    please login at the top of the page</p>
+                            <div class="checkout__input mt-3">
+                                <p>Область<span>*</span></p>
+                                <select class="select-area" name="area_id" style="width: 100%">
+                                    <option value="">Область</option>
+                                </select>
                             </div>
-                            <div class="checkout__input">
-                                <p>Account Password<span>*</span></p>
-                                <input type="text">
+
+                            <div class="checkout__input mt-3">
+                                <div class="region-wrapper">
+                                    <p>Регіон<span>*</span></p>
+                                    <select class="select-region" name="region_id" style="width: 100%">
+                                        <option value="">Регіон</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="checkout__input__checkbox">
-                                <label for="diff-acc">
-                                    Note about your order, e.g, special noe for delivery
-                                    <input type="checkbox" id="diff-acc">
-                                    <span class="checkmark"></span>
-                                </label>
+
+                            <div class="checkout__input mt-3">
+                                <div class="city-wrapper">
+                                    <p>Місто<span>*</span></p>
+                                    <select class="select-city" name="city_id" style="width: 100%">
+                                        <option value="">Місто</option>
+                                    </select>
+                                </div>
                             </div>
-                            <div class="checkout__input">
-                                <p>Order notes<span>*</span></p>
-                                <input type="text"
-                                       placeholder="Notes about your order, e.g. special notes for delivery.">
+
+                            <div class="checkout__input mt-3">
+                                <div class="city_region-wrapper">
+                                    <p>Регіон міста<span>*</span></p>
+                                    <select class="select-city-region" name="city_region_id" style="width: 100%">
+                                        <option value="">Регіон міста</option>
+                                    </select>
+                                </div>
                             </div>
                         </div>
                         <div class="col-lg-4 col-md-6">
@@ -90,38 +114,13 @@
                                 <h4 class="order__title">Your order</h4>
                                 <div class="checkout__order__products">Product <span>Total</span></div>
                                 <ul class="checkout__total__products">
-                                    <li>01. Vanilla salted caramel <span>$ 300.0</span></li>
-                                    <li>02. German chocolate <span>$ 170.0</span></li>
-                                    <li>03. Sweet autumn <span>$ 170.0</span></li>
-                                    <li>04. Cluten free mini dozen <span>$ 110.0</span></li>
+                                    @foreach(cart()->purchases() as $key => $purchase)
+                                        <li>{{$key + 1}}. {{ $purchase->name }} <span>{{ $purchase->amount }}.грн</span></li>
+                                    @endforeach
                                 </ul>
                                 <ul class="checkout__total__all">
-                                    <li>Subtotal <span>$750.99</span></li>
-                                    <li>Total <span>$750.99</span></li>
+                                    <li>Total <span>{{ cart()->totalPrice() }}.грн</span></li>
                                 </ul>
-                                <div class="checkout__input__checkbox">
-                                    <label for="acc-or">
-                                        Create an account?
-                                        <input type="checkbox" id="acc-or">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <p>Lorem ipsum dolor sit amet, consectetur adip elit, sed do eiusmod tempor incididunt
-                                    ut labore et dolore magna aliqua.</p>
-                                <div class="checkout__input__checkbox">
-                                    <label for="payment">
-                                        Check Payment
-                                        <input type="checkbox" id="payment">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
-                                <div class="checkout__input__checkbox">
-                                    <label for="paypal">
-                                        Paypal
-                                        <input type="checkbox" id="paypal">
-                                        <span class="checkmark"></span>
-                                    </label>
-                                </div>
                                 <button type="submit" class="site-btn">PLACE ORDER</button>
                             </div>
                         </div>
@@ -131,3 +130,76 @@
         </div>
     </section>
 @endsection
+
+
+
+@push('scripts')
+    <script>
+        $(document).ready(function() {
+            let area_id = null;
+            let region_id = null;
+            let city_id = null;
+
+            $('.select-area').select2({
+                ajax: {
+                    url: "{{ route('suggest.settlements', \App\Models\Settlement::TYPE_AREA) }}",
+                    dataType: 'json'
+                }
+            }).change(function (e){
+                 area_id = $(this).val();
+                $('.region-wrapper').toggle(!!area_id);
+                $('.select-region').val(null).trigger('change');
+            })
+
+            $('.select-region').select2({
+                ajax: {
+                    url: "{{ route('suggest.settlements', \App\Models\Settlement::TYPE_REGION) }}",
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            area_id: area_id,
+                            q: params.term
+                        };
+                    }
+                }
+            }).change(function (e){
+                region_id = $(this).val();
+                $('.city-wrapper').toggle(!!region_id);
+                $('.select-city').val(null).trigger('change');
+            })
+
+            $('.select-city').select2({
+                ajax: {
+                    url: "{{ route('suggest.settlements', \App\Models\Settlement::TYPE_CITY) }}",
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            area_id: area_id,
+                            region_id: region_id,
+                            q: params.term
+                        };
+                    }
+                }
+            }).change(function (e){
+                city_id = $(this).val();
+                $('.city_region-wrapper').toggle(!!city_id);
+                $('.select-city-region').val(null).trigger('change');
+            })
+
+            $('.select-city-region').select2({
+                ajax: {
+                    url: "{{ route('suggest.settlements', \App\Models\Settlement::TYPE_CITY_REGION) }}",
+                    dataType: 'json',
+                    data: function (params) {
+                        return {
+                            area_id: area_id,
+                            region_id: region_id,
+                            city_id: city_id,
+                            q: params.term
+                        };
+                    }
+                }
+            })
+        });
+    </script>
+@endpush

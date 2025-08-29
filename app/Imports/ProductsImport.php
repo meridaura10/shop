@@ -6,18 +6,22 @@ use App\Actions\Products\CreateNewProduct;
 use App\Models\Attribute;
 use App\Models\Product;
 use App\Models\Term;
+use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Support\Collection;
 use Maatwebsite\Excel\Concerns\ToModel;
 use Maatwebsite\Excel\Concerns\WithHeadingRow;
 use Spatie\MediaLibrary\MediaCollections\Exceptions\FileDoesNotExist;
 
-class ProductsImport implements ToModel , WithHeadingRow
+class ProductsImport implements ToModel , WithHeadingRow, ShouldQueue
 {
+    use Queueable;
     /**
     * @param array $row
     *
     * @return \Illuminate\Database\Eloquent\Model|null
     */
+
     public function model(array $row)
     {
         $brand = $row['brand'] ? $this->getBrand($row['brand']) : null;
@@ -43,6 +47,7 @@ class ProductsImport implements ToModel , WithHeadingRow
             ],
             'categories' => $categories,
             'characteristics' => $characteristics->pluck('id'),
+            'seo' => $row['seo'] ?? null,
         ]);
 
         $this->setImages($row['images'] ?? '', $product);
@@ -59,10 +64,14 @@ class ProductsImport implements ToModel , WithHeadingRow
         }
     }
 
-    function addImageFromUrl($product, string $url, string $collection = 'images')
+    function addImageFromUrl($product, string $url, string $collection = 'images'): void
     {
-        $product->addMediaFromUrl($url)
-            ->toMediaCollection($collection);
+        try {
+            $product->addMediaFromUrl($url)
+                ->toMediaCollection($collection);
+        } catch (\Throwable $e) {
+
+        }
     }
 
     public function getBrand(string $name): Term

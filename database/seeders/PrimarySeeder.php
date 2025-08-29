@@ -4,7 +4,7 @@ namespace Database\Seeders;
 
 use App\Models\Page;
 use App\Models\User;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Fomvasss\Variable\Facade as VariableFacade;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -161,7 +161,34 @@ class PrimarySeeder extends Seeder
         ];
 
         foreach ($pagesData as $pageData) {
-            Page::query()->updateOrCreate(['slug' => $pageData['slug']], $pageData);
+            Page::query()->updateOrCreate(
+                [
+                    'slug' => $pageData['slug']
+                ],
+                [
+                    'name' => $pageData['name'],
+                    'status' => Page::STATUS_PUBLISHED,
+                ]
+            );
+        }
+
+        $variablesData = [
+           'contacts' => [
+               'phones' => [
+                   'vodafone' => fake()->phoneNumber(),
+                   'kyivstar' => fake()->phoneNumber(),
+               ],
+               'email' => fake()->email,
+           ],
+            'addresses' => [
+                fake()->address(),
+                fake()->address(),
+            ],
+            'site.description' => fake()->text(),
+        ];
+
+        foreach ($variablesData as $fieldName => $variableData) {
+            VariableFacade::saveArray($fieldName, $variableData);
         }
     }
 }

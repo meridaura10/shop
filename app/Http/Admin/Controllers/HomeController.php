@@ -13,8 +13,6 @@ class HomeController extends Controller
 {
     public function __invoke(): View
     {
-//        dd(currency()->convertWanted(10));
-
         $dashboardStats = cache()->remember('dashboard:stats', 3000, function () {
             return [
                 'orders' => [
@@ -36,5 +34,8 @@ class HomeController extends Controller
 
         return view('admin.home', [
             'dashboardStats' => $dashboardStats,
-        ]);}
+        ]);
+    }
+
+
 }

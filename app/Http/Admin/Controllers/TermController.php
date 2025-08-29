@@ -2,13 +2,11 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\TermRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\TermRequest;
 use App\Models\Term;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Illuminate\View\View;
 use Symfony\Component\HttpFoundation\Response;
 
@@ -41,11 +39,11 @@ class TermController extends Controller
     {
         $this->authorize('create', Term::class);
 
-        $data = $request->validated();
-
         $key = Term::vocabulariesList('key', 'slug')[$vocabularySlug];
 
-        $term = Term::query()->create(array_merge($data, ['vocabulary' => $key]));
+        $term = Term::query()->create(array_merge($request->getData(), ['vocabulary' => $key]));
+
+        $term->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
 
         $term->mediaManage($request);
 
@@ -65,7 +63,9 @@ class TermController extends Controller
     {
         $this->authorize('update', $term);
 
-        $term->update($request->validated());
+        $term->update($request->getData());
+
+        $term->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
 
         $term->mediaManage($request);
 

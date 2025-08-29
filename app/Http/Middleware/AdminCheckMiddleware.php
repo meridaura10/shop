@@ -16,7 +16,7 @@ class AdminCheckMiddleware
     public function handle(Request $request, Closure $next): Response
     {
         if (!auth()->check() || !auth()->user()->can('admin.auth')) {
-            return redirect()->route('login');
+            return redirect()->route('admin.login');
         }
 
         return $next($request);

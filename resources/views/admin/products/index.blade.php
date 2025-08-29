@@ -10,7 +10,7 @@
                     <h3 class="card-title">Total: {{ $products->total() }} <a href="{{ route('admin.products.create') }}" class="btn ml-3 btn-success btn-xs"><i class="fas fa-plus"></i> Create</a></h3>
 
                     <div class="card-tools">
-                        <a href="{{ route('admin.products.export') }}" class="btn btn-default btn-xs"><i class="fas fa-upload"></i> Export</a>
+                        <a href="{{ route('admin.products.export', request()->query()) }}" class="btn btn-default btn-xs"><i class="fas fa-upload"></i> Export</a>
                         <form class="js-form-submit-file-changed" action="{{ route('admin.products.import') }}" method="POST" enctype="multipart/form-data" style="display: inline-flex" accept-charset="UTF-8">
                             @method('POST')
                             @csrf
@@ -68,10 +68,17 @@
                     @foreach($products as $product)
                         <tr id="{{ $product->id }}" class="va-center ui-sortable-handle">
                             <td class="text-left space-1">
-                                <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                <div>
+                                    <a href="{{ route('admin.products.edit', $product) }}" class="btn btn-info btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                                </div>
+                                <div class="mt-1">
+                                    <a href="{{ route('admin.reviews.products.index', $product) }}" class="btn btn-info btn-sm"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+                                            <path d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1z"/>
+                                        </svg></a>
+                                </div>
 
 
-                                <form action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Ви впевнені, що хочете видалити цей продукт?')">
+                                <form class="mt-1" action="{{ route('admin.products.destroy', $product->id) }}" method="POST" onsubmit="return confirm('Ви впевнені, що хочете видалити цей продукт?')">
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit" class="border-0 m-0 p-0 bg-transparent">

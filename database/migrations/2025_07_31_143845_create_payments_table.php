@@ -13,12 +13,12 @@ return new class extends Migration
     {
         Schema::create('payments', function (Blueprint $table) {
             $table->id();
+            $table->uuid();
             $table->decimal('amount',15);
             $table->string('system')->nullable();
             $table->string('status');
-            $table->string('type');
             $table->string('page_url')->nullable();
-            $table->string('expired_time')->nullable();
+            $table->timestamp('expired_time')->nullable();
             $table->timestamps();
 
             $table->morphs('model');

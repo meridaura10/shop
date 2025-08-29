@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use App\Mail\MessageLeadMail;
 use App\Models\Lead;
+use App\Models\Product;
 use App\Notifications\DistributionLeadNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;

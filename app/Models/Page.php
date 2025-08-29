@@ -4,6 +4,7 @@ namespace App\Models;
 
 use App\Models\Traits\Boot\HasSlug;
 use App\Models\Traits\HasStaticLists;
+use Fomvasss\Seo\Models\HasSeo;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -11,7 +12,7 @@ use Illuminate\Database\Eloquent\Model;
 class Page extends Model
 {
     /** @use HasFactory<\Database\Factories\PageFactory> */
-    use HasFactory, HasStaticLists, HasSlug;
+    use HasFactory, HasStaticLists, HasSlug, HasSeo;
 
     const STATUS_PUBLISHED = 'published';
 
@@ -27,6 +28,14 @@ class Page extends Model
     {
         return [
             'content' => 'array'
+        ];
+    }
+
+    public function registerSeoDefaultTags(): array
+    {
+        return [
+            'title' => $this->name,
+            'description' => $this->content,
         ];
     }
 

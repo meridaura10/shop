@@ -2,12 +2,10 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\AttributeRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\AttributeRequest;
 use App\Models\Attribute;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 
 class AttributeController extends Controller

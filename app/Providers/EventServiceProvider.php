@@ -13,12 +13,6 @@ class EventServiceProvider extends \Illuminate\Foundation\Support\Providers\Even
 {
     public function boot(): void
     {
-        Event::listen(function (Registered $event) {
-            (new NotifyAdminsOnUserRegistered())->handle($event->user);
-        });
-
-        Event::listen(function (ConfirmOrder $event) {
-            (new ConfirmOrderClient())->handle($event->order);
-        });
+        Event::listen(NotifyAdminsOnUserRegistered::class, ConfirmOrder::class);
     }
 }

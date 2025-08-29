@@ -2,13 +2,12 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\CharacteristicRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\CharacteristicRequest;
 use App\Models\Attribute;
 use App\Models\Characteristic;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 
 class CharacteristicController extends Controller
 {

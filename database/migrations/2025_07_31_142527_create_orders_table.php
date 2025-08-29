@@ -16,7 +16,7 @@ return new class extends Migration
             $table->decimal('amount',15,2)->default(0);
             $table->string('status');
             $table->string('type');
-            $table->json('address')->nullable();
+            $table->text('address')->nullable();
             $table->json('customer')->nullable();
             $table->timestamps();
 

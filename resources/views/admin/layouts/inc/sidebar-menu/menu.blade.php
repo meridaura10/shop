@@ -93,6 +93,25 @@
                 <p>Pages</p>
             </a>
         </li>
+        <li class="nav-item">
+            <a href="{{ route('admin.variables.index') }}" class="nav-link">
+                <p>Variables</p>
+            </a>
+        </li>
+        <li class="nav-item">
+            <a href="#" class="nav-link">
+                <p>Settings<i class="right fas fa-angle-left"></i></p>
+            </a>
+            <ul class="nav nav-treeview">
+                <li class="nav-item">
+                    <form method="post" action="{{ route('admin.settings.sitemap.regenerate') }}">
+                        @method('POST')
+                        @csrf
+                        <button type="submit" class="btn ml-3 btn-success btn-xs">regenerate site map</button>
+                    </form>
+                </li>
+            </ul>
+        </li>
     </ul>
 </nav>
 <!-- /.sidebar-menu -->

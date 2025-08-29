@@ -2,12 +2,15 @@
 
 namespace Database\Seeders;
 
+use App\Models\Term;
+use Database\Factories\Traits\HasFakeImageToModelTrait;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 
 class TaxonomySeeder extends Seeder
 {
+    use HasFakeImageToModelTrait;
     /**
      * Run the database seeds.
      *
@@ -18,33 +21,53 @@ class TaxonomySeeder extends Seeder
         $this->seedVocabularies([
             // BRANDS & MODELS
             [
-                'vocabulary' => 'brands',
+                'vocabulary' => Term::VOCABULARY_BRANDS,
                 'terms' => [
                     [
                         'name' => 'Tesla',
                         'description' => 'Tesla Motors',
-                        'terms' => [
-                            ['name' => 'Roadster', 'vocabulary' => 'models'],
-                            ['name' => 'Model S', 'vocabulary' => 'models'],
-                            ['name' => 'Model X', 'vocabulary' => 'models'],
-                            ['name' => 'Model 3', 'vocabulary' => 'models'],
-                        ],
                     ],
                     [
                         'name' => 'BMW',
                         'description' => 'Bayerische Motoren Werke AG',
-                        'terms' => [
-                            ['name' => 'i3', 'vocabulary' => 'models'],
-                            ['name' => 'M5', 'vocabulary' => 'models'],
-                            ['name' => 'X5', 'vocabulary' => 'models'],
-                            ['name' => 'X6', 'vocabulary' => 'models'],
-                        ],
+                    ],
+                    [
+                        'name' => 'Fendi',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Saint Laurent',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Giorgio Armani',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Coach',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Prada',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Gucci',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Loewe',
+                        'description' => 'Bayerische Motoren Werke AG',
+                    ],
+                    [
+                        'name' => 'Michael Kors',
+                        'description' => 'Bayerische Motoren Werke AG',
                     ],
                 ],
             ],
 
             [
-                'vocabulary' => 'product_categories',
+                'vocabulary' => Term::VOCABULARY_PRODUCT_CATEGORIES,
                 'terms' => [
                     [
                         'name' => 'Electronics',
@@ -62,7 +85,7 @@ class TaxonomySeeder extends Seeder
 
 
             [
-                'vocabulary' => 'article_categories',
+                'vocabulary' => Term::VOCABULARY_ARTICLE_CATEGORIES,
                 'terms' => [
                     [
                         'name' => 'Electronics',
@@ -106,6 +129,7 @@ class TaxonomySeeder extends Seeder
                 $term = $termModelClass::updateOrCreate([
                     'name' => $item['name'],
                     'vocabulary' => Arr::get($item, 'vocabulary', $vocabulary),
+                    'status' => Term::STATUS_PUBLISHED,
                 ], [
                     'slug' => isset($item['slug'])
                         ? Str::slug($item['slug'], '-')
@@ -117,11 +141,14 @@ class TaxonomySeeder extends Seeder
                 $term = $termModelClass::updateOrCreate([
                     'name' => $item,
                     'vocabulary' => $vocabulary,
+                    'status' => Term::STATUS_PUBLISHED,
                 ], [
                     'slug' => Str::slug($item),
                     'parent_id' => $parentId,
                 ]);
             }
+
+           $this->hasFakeImageToModelTrait($term, 1);
 
             $this->command->info(" - Term saved: {$term->id}: $term->name [{$term->vocabulary}]");
 

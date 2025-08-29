@@ -63,6 +63,8 @@
     </div>
 </div>
 
+@include('admin.seo.inc.form', ['model' => $product ?? null])
+
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Submit</button>
 </div>

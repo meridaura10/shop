@@ -22,6 +22,7 @@ return new class extends Migration
             $table->decimal('price',)->default(0);
             $table->integer('quantity')->default(0);
             $table->string('status')->nullable();
+            $table->unsignedSmallInteger('rating')->nullable();
             $table->timestamps();
 
             $table->foreignId('brand_id')->nullable()->constrained('terms')->nullOnDelete();

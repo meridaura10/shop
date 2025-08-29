@@ -2,14 +2,16 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Models\Traits\HasStaticLists;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 use Laravolt\Avatar\Facade as Avatar;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
 use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
@@ -18,7 +20,7 @@ use Spatie\Permission\Traits\HasRoles;
 class User extends Authenticatable implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\UserFactory> */
-    use HasFactory, Notifiable, HasStaticLists, InteractsWithMedia, HasRoles;
+    use HasFactory, Notifiable, HasApiTokens, HasStaticLists, InteractsWithMedia, HasRoles;
 
     const STATUS_ACTIVE = 'active';
 
@@ -60,7 +62,17 @@ class User extends Authenticatable implements HasMedia
 
     public function orders(): HasMany
     {
-        return $this->hasMany(Order::class);
+        return $this->hasMany(Order::class)->where('type', Order::TYPE_ORDER);
+    }
+
+    public function cart(): HasOne
+    {
+        return $this->hasOne(Order::class)->where('type', Order::TYPE_CART);
+    }
+
+    public function favorites(): HasMany
+    {
+        return $this->hasMany(Favorite::class);
     }
 
     public function scopeFilter(Builder $query, array $filters): Builder
@@ -105,14 +117,15 @@ class User extends Authenticatable implements HasMedia
             ->singleFile();
 
         $this->addMediaConversion('table')
-            ->format('jpg')->quality(93)
-            ->fit('crop', 360, 257);
+            ->format('webp')->quality(93)
+            ->fit(Fit::Crop, 360, 257);
     }
 
     public function getAvatar(): string
     {
         $media = auth()->user()->getFirstMediaUrl('avatar');
-        return $media ? $media : Avatar::create($this->name ?? $this->email)->toBase64();
+
+        return $media ?: Avatar::create($this->name ?? $this->email)->toBase64();
     }
 
     public function routeNotificationForSmsru()

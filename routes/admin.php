@@ -10,32 +10,16 @@ use App\Http\Admin\Controllers\OrderController;
 use App\Http\Admin\Controllers\PageController;
 use App\Http\Admin\Controllers\ProductController;
 use App\Http\Admin\Controllers\PurchaseController;
+use App\Http\Admin\Controllers\ReviewController;
 use App\Http\Admin\Controllers\RoleController;
+use App\Http\Admin\Controllers\SettingController;
+use App\Http\Admin\Controllers\SuggestController;
 use App\Http\Admin\Controllers\TermController;
 use App\Http\Admin\Controllers\UserController;
-use App\Http\Auth\Web\Controllers\ForgotPasswordController;
-use App\Http\Auth\Web\Controllers\LoginController;
-use App\Http\Auth\Web\Controllers\RegisterController;
-use App\Http\Auth\Web\Controllers\ResetPasswordController;
-use App\Http\Controllers\SuggestController;
+use App\Http\Admin\Controllers\VariableController;
 use Illuminate\Support\Facades\Route;
 
-Route::middleware('guest')->group(function (){
-    Route::get('/login', [LoginController::class,'showLoginForm'])->name('login');
-    Route::post('/login', [LoginController::class,'login']);
-
-    Route::get('/register', [RegisterController::class,'showRegistrationForm'])->name('register');
-    Route::post('/register', [RegisterController::class,'register']);
-
-    Route::get('/password/forgot', [ForgotPasswordController::class,'showLinkRequestForm'])->name('password.forgot');
-    Route::post('/password/email', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
-    Route::get('/password/reset/{token}', [ResetPasswordController::class,'showResetForm'])->name('password.reset');
-    Route::post('/password/reset', [ResetPasswordController::class,'reset'])->name('password.update');
-});
-
 Route::middleware('auth')->group(function (){
-   Route::post('/logout', [LoginController::class,'logout'])->name('logout');
-
    Route::prefix('/admin/profile')->middleware('admin')->controller(\App\Http\Admin\Controllers\ProfileController::class)->name('admin.profile.')->group(function (){
        Route::get('/edit/', 'edit')->name('edit');
        Route::patch('/{user}/update', 'update')->name('update');
@@ -50,7 +34,15 @@ Route::prefix('admin/')->name('admin.')->middleware('admin')->group(function (){
     Route::get('/products/export', [ProductController::class, 'export'])->name('products.export');
     Route::post('/products/import', [ProductController::class, 'import'])->name('products.import');
 
+    Route::prefix('/reviews')->controller(ReviewController::class)->name('reviews.')->group(function (){
+        Route::get('/products/{product}', 'index')->name('products.index');
+        Route::delete('/{review}', 'destroy')->name('destroy');
+        Route::post('/{review}/put', 'put')->name('put');
+    });
+
+
     Route::resource('attributes', AttributeController::class)->except(['show']);
+    Route::resource('variables', VariableController::class)->except(['show']);
     Route::resource('articles', ArticleController::class)->except(['show']);
     Route::resource('pages', PageController::class)->except(['show']);
     Route::resource('leads', LeadController::class)->except(['show']);
@@ -80,7 +72,9 @@ Route::prefix('admin/')->name('admin.')->middleware('admin')->group(function (){
         Route::delete('/{characteristic}/delete',  'destroy')->name('destroy');
     });
 
-
+    Route::prefix('/settings/')->name('settings.')->controller(SettingController::class)->group(function (){
+        Route::post('sitemap', 'sitemapStore')->name('sitemap.regenerate');
+    });
 
     Route::prefix('/suggest/')->controller(SuggestController::class)->name('suggest.')->group(function (){
         Route::get('/terms/{vocabulary}', 'terms')->name('terms');

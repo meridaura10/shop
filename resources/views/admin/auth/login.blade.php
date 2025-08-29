@@ -46,7 +46,7 @@
         <a href="{{ route('password.forgot') }}">Restore password</a>
     </p>
     <p class="mb-0">
-        <a href="{{ route('register') }}" class="text-center">Register</a>
+        <a href="{{ route('admin.register') }}" class="text-center">Register</a>
     </p>
 </div>
 @endsection

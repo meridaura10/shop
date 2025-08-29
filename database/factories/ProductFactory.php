@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\Characteristic;
 use App\Models\Product;
 use App\Models\Term;
+use Database\Factories\Traits\HasFakeImageToModelTrait;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
@@ -13,6 +14,7 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class ProductFactory extends Factory
 {
+    use HasFakeImageToModelTrait;
     /**
      * Define the model's default state.
      *
@@ -25,7 +27,7 @@ class ProductFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => $this->faker->text(),
-            'quantity' => $this->faker->numberBetween(0, 100),
+            'quantity' => $this->faker->numberBetween(0, 10),
             'price' => $this->faker->numberBetween(50, 5000),
             'slug' => $this->faker->slug(),
             'status' => $status,
@@ -35,8 +37,8 @@ class ProductFactory extends Factory
     public function configure(): static
     {
         return $this->afterCreating(function (Product $product) {
-            $categories = Term::whereProductCategories()->inRandomOrder()->take(rand(1, 5))->pluck('id');
-            $brand_id = rand(1,2) == 1 ? Term::whereBrands()->inRandomOrder()->first()->id ?? null : null;
+            $categories = Term::whereProductCategories()->inRandomOrder()->take(rand(1, 3))->pluck('id');
+            $brand_id = rand(1,3) == 1 ? Term::whereBrands()->inRandomOrder()->first()?->id : null;
 
             $characteristics = Characteristic::query()
                 ->inRandomOrder()
@@ -57,12 +59,11 @@ class ProductFactory extends Factory
                     : 0,
             ]);
 
-            try {
-                $product->addMediaFromUrl('https://picsum.photos/600/400')
-                    ->toMediaCollection('images');
-            }catch (\Exception $exception){
-
+            if(rand(1,5) < 4){
+                return;
             }
+
+            $this->hasFakeImageToModelTrait($product, 1);
         });
     }
 }

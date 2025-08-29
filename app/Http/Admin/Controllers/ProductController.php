@@ -5,18 +5,14 @@ namespace App\Http\Admin\Controllers;
 use App\Actions\Products\CreateNewProduct;
 use App\Actions\Products\UpdateNewProduct;
 use App\Exports\ProductsExport;
+use App\Http\Admin\Requests\ImportDataRequest;
+use App\Http\Admin\Requests\ProductRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ImportDataRequest;
-use App\Http\Requests\ProductRequest;
-use App\Imports\ProductsImport;
+use App\Jobs\ImportProductsJob;
 use App\Models\Attribute;
 use App\Models\Product;
-use App\Models\Term;
-use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
-use Illuminate\Foundation\Bus\PendingDispatch;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Illuminate\View\View;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\BinaryFileResponse;
@@ -51,6 +47,7 @@ class ProductController extends Controller
         $product = CreateNewProduct::run([
             'product' => $request->getData(),
             'categories' => $data['categories'] ?? [],
+            'seo' => $request->getSeo(),
         ]);
 
         $product->mediaManage($request);
@@ -64,8 +61,9 @@ class ProductController extends Controller
 
         $attributes = Attribute::query()
             ->whereHas('categories', function ($query) use ($product) {
-                $query->whereIn('terms.id', $product->categories->pluck('id'))->orderBy('terms.weight');
+                $query->whereIn('terms.id', $product->categories->pluck('id'));
             })
+            ->has('characteristics')
             ->with('characteristics')
             ->get();
 
@@ -82,6 +80,7 @@ class ProductController extends Controller
             'product' => $request->getData(),
             'categories' => $data['categories'] ?? [],
             'characteristics' => $data['characteristics'] ?? [],
+            'seo' => $data['seo'] ?? [],
         ]);
 
         $product->mediaManage($request);
@@ -98,14 +97,20 @@ class ProductController extends Controller
         return redirect()->route('admin.products.index');
     }
 
-    public function export(): BinaryFileResponse
+    public function export(Request $request): BinaryFileResponse
     {
-        return Excel::download(new ProductsExport(), "products.xlsx");
+        $export = new ProductsExport();
+
+        $export->setFilters($request->all());
+
+        return Excel::download($export, "products.xlsx");
     }
 
     public function import(ImportDataRequest $request): RedirectResponse
     {
-        Excel::import(new ProductsImport(), $request->file('file'));
+        $path = $request->file('file')->store('imports');
+
+        ImportProductsJob::dispatch($path);
 
         return back();
     }

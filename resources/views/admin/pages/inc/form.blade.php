@@ -16,6 +16,7 @@
          'rows' => 3,
 ]) !!}
 
+@include('admin.seo.inc.form', ['model' => $page ?? null])
 
 <div class="card-footer">
     <button type="submit" class="btn btn-primary">Submit</button>

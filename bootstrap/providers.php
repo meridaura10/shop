@@ -3,7 +3,6 @@
 return [
     App\Providers\AppServiceProvider::class,
     App\Providers\AuthServiceProvider::class,
-    App\Providers\CurrencyProvider::class,
     App\Providers\EventServiceProvider::class,
     App\Providers\MonobankProvider::class,
     App\Providers\RouteBindingServiceProvider::class,

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Illuminate\Support\Collection;
 
 class Review extends Model
 {
@@ -23,6 +24,8 @@ class Review extends Model
     const STATUS_PUBLISHED = 'published';
 
     const STATUS_UNPUBLISHED = 'unpublished';
+
+    const STATUS_REJECTED = 'rejected';
 
     protected $attributes = [
       'status' => self::STATUS_PENDING,
@@ -44,11 +47,31 @@ class Review extends Model
         return $this->belongsTo(Review::class, 'parent_id');
     }
 
-    /**
-     * @param string|null $columnKey
-     * @param string|null $indexKey
-     * @return array
-     */
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
+    public static function treeFor(Model $model): Collection
+    {
+        $reviews = static::query()
+            ->where('model_id', $model->id)
+            ->where('model_type', $model->getMorphClass())
+            ->get();
+
+        $grouped = $reviews->groupBy('parent_id');
+
+        return static::buildTree(null, $grouped);
+    }
+
+    protected static function buildTree(?int $parentId,Collection|array $grouped): Collection
+    {
+        return collect($grouped[$parentId] ?? [])->map(function ($item) use ($grouped) {
+            $item->setRelation('children', static::buildTree($item->id, $grouped));
+            return $item;
+        });
+    }
+
     public static function typesList(string $columnKey = null, string $indexKey = null, array $options = []): array
     {
         $records = [
@@ -67,11 +90,15 @@ class Review extends Model
         $records = [
             [
                 'key' => self::STATUS_PUBLISHED,
-                'name' => trans('lists.reviews_statuses.' . self::STATUS_PUBLISHED . '.name'),
+                'name' => 'Опубліковано',
             ],
             [
                 'key' => self::STATUS_UNPUBLISHED,
-                'name' => trans('lists.reviews_statuses.' . self::STATUS_UNPUBLISHED . '.name'),
+                'name' => 'Не опубліковано'
+            ],
+            [
+                'key' => self::STATUS_REJECTED,
+                'name' => 'Відхилино'
             ],
         ];
 

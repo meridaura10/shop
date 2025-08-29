@@ -19,13 +19,15 @@
 
 {!! Lte3::select2('category_id', isset($article?->category_id) ? $article->category_id : null, isset($article?->category_id) ? [$article->category_id => $article->category->name] : [], [
    'label' => 'category',
-   'url_suggest' => route('admin.categories.suggest'),
+   'url_suggest' => route('admin.suggest.terms', \App\Models\Term::VOCABULARY_ARTICLE_CATEGORIES),
    'empty_value' => 'немає категорії',
 ]) !!}
 
 {!! Lte3::mediaImage('images', [] ,[
     'multiple' => 1,
 ]) !!}
+
+@include('admin.seo.inc.form', ['model' => $article ?? null])
 
 
 <div class="card-footer">

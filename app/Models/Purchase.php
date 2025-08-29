@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -38,13 +39,16 @@ class Purchase extends Model implements HasMedia
         );
     }
 
-    public function customMediaConversions(Media $media = null): void
+    public function registerMediaCollections(): void
     {
-        $this->addMediaCollection('main')
-            ->singleFile();
+        $this->addMediaCollection('image')->singleFile();
+    }
 
-        $this->addMediaConversion('table')
-            ->format('jpg')->quality(93)
-            ->fit('crop', 360, 257);
+    public function registerMediaConversions(Media $media = null): void
+    {
+        $this->addMediaConversion('preview')
+            ->format('webp')
+            ->quality(93)
+            ->fit(Fit::Contain, 100, 140);
     }
 }

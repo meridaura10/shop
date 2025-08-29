@@ -5,14 +5,17 @@ namespace App\Models;
 
 use App\Models\Traits\Boot\HasSlug;
 use App\Models\Traits\HasStaticLists;
+use Fomvasss\Seo\Models\HasSeo;
 use Illuminate\Database\Eloquent\Builder;
 use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
 
 class Term extends \Fomvasss\SimpleTaxonomy\Models\Term implements HasMedia
 {
-    use HasStaticLists, InteractsWithMedia, HasSlug;
+    use HasStaticLists, InteractsWithMedia, HasSlug, HasSeo;
 
     const VOCABULARY_PRODUCT_CATEGORIES = 'product_categories';
 
@@ -31,10 +34,25 @@ class Term extends \Fomvasss\SimpleTaxonomy\Models\Term implements HasMedia
         'status' => Term::STATUS_UNPUBLISHED,
     ];
 
+    public function brandProducts()
+    {
+        return $this->hasMany(Product::class, 'brand_id', 'id');
+    }
+
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', self::STATUS_PUBLISHED);
     }
+
+    public function registerSeoDefaultTags(): array
+    {
+        return [
+            'title' => $this->name,
+            'description' => $this->description,
+            'og_image' => $this->getFirstMediaUrl('images', 'thumb'),
+        ];
+    }
+
 
     public static function vocabulariesList(string $columnKey = null, string $indexKey = null): array
     {
@@ -84,8 +102,8 @@ class Term extends \Fomvasss\SimpleTaxonomy\Models\Term implements HasMedia
             ->singleFile();
 
         $this->addMediaConversion('table')
-            ->format('jpg')->quality(93)
-            ->fit('crop', 360, 257);
+            ->format('webp')->quality(93)
+            ->fit(Fit::Contain, 360, 257);
     }
 
     public static function whereVocabulary(array|string $vocabulary = null): Builder

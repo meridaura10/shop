@@ -21,6 +21,8 @@ class UpdateNewProduct
 
         $product->characteristics()->sync(array_filter($data['characteristics']));
 
+        $product->seo()->updateOrCreate([], ['tags' => $data['seo']]);
+
         return $product;
     }
 }

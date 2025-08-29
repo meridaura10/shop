@@ -69,11 +69,7 @@
                             {{ $order->amount }}
                         </td>
                         <td>
-                            @foreach($order->address as $addressKey => $addressValue)
-                                <div>
-                                    {{ $addressKey }} -- {{ $addressValue }}
-                                </div>
-                            @endforeach
+                           {{ $order->address }}
                         </td>
                         <td>
                             @foreach($order->customer as $customerKey => $customerValue)

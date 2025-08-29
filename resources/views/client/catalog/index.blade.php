@@ -1,39 +1,44 @@
 @extends('client.layouts.app')
 
 @section('content')
+
+    {{ Breadcrumbs::render('catalog') }}
+
     <section class="shopping-cart spad">
         <div class="container">
+
             <div class="row">
-                @for($i = 0; $i < 15; $i++)
+                @foreach($categories as $category)
                     <div class="col-lg-4 col-md-6 col-sm-6">
                         <div class="product__item">
-                            <div class="product__item__pic set-bg" data-setbg="/client/img/product/product-2.jpg" style="background-image: url(&quot;/client/img/product/product-2.jpg&quot;);">
+                            <div class="product__item__pic set-bg" data-setbg="{{ $category->getFirstMediaUrl('image','preview') ?: asset('client/notFound/404.png') }}" style="background-image: url(&quot;/client/img/product/product-2.jpg&quot;);">
                             </div>
                            <div class="p-2">
-                               <h5>
-                                   name to cateboty
-                               </h5>
+                               <a href="{{ route('catalog.show', $category->slug) }}">
+                                   <h5>
+                                       {{ $category->name }}
+                                   </h5>
+                               </a>
                            </div>
                             <ul class="product_categories-list ">
                                 <li class="pl-3">
-                                    qexqeexweweqweqweqweqwewqewqeqexqeexweweqweqweqweqwewqewqe
+                                    @if($category->children?->count())
+                                        Дочірні категорії:
+                                    @endif
                                 </li>
-                                <li class="pl-3">
-                                    qexqeexweweqweqweqweqwewqewqe
-                                </li>
-                                <li class="pl-3">
-                                    qexqeexweweqweqweqweqwewqewqe
-                                </li>
-                                <li class="pl-3">
-                                    qexqeexweweqweqweqweqwewqewqe
-                                </li>
-                                <li class="pl-3">
-                                    qexqeexweweqweqweqweqwewqewqe
-                                </li>
+                                @foreach($category->children as $category)
+                                    <li class="pl-3">
+                                        <a href="{{ route('catalog.show', $category->slug) }}">
+                                            <h6>
+                                                {{ $category->name }}
+                                            </h6>
+                                        </a>
+                                    </li>
+                                @endforeach
                             </ul>
                         </div>
                     </div>
-                @endfor
+                @endforeach
 
 
             </div>

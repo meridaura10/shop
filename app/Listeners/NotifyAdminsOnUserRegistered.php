@@ -4,6 +4,7 @@ namespace App\Listeners;
 
 use App\Models\User;
 use App\Notifications\AdminNewUserRegisteredNotification;
+use Illuminate\Auth\Events\Registered;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Support\Facades\Notification;
@@ -21,7 +22,7 @@ class NotifyAdminsOnUserRegistered
     /**
      * Handle the event.
      */
-    public function handle(object $event): void
+    public function handle(Registered $event): void
     {
         $admins = User::query()->whereHas('roles', fn ($q) => $q->where('name', 'admin'))->get();
 

@@ -5,7 +5,7 @@ return [
     /*
      * This model will be used to Term.
      */
-    'term_model' => \Fomvasss\SimpleTaxonomy\Models\Term::class,
+    'term_model' => \App\Models\Term::class,
 
     /*
      * Apply global scopes for model terms.

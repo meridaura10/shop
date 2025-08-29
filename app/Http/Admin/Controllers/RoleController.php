@@ -2,8 +2,8 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\RoleRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\RoleRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 use Spatie\Permission\Models\Permission;

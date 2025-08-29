@@ -6,25 +6,25 @@ use App\Models\Traits\HasStaticLists;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphTo;
+use Spatie\MediaLibrary\MediaCollections\Models\Concerns\HasUuid;
 
 class Payment extends Model
 {
     /** @use HasFactory<\Database\Factories\PaymentFactory> */
-    use HasFactory, HasStaticLists;
-
-    protected $guarded = ['id'];
+    use HasFactory, HasStaticLists, HasUuid;
 
     const STATUS_PENDING = 'pending';
 
-    const SYSTEM_FONDY = 'fondy';
+    const STATUS_FAILED = 'failed';
 
-    const TYPE_CARD = 'card';
+    const STATUS_COMPLETED = 'completed';
 
-    const TYPE_CASH = 'cash';
+    const SYSTEM_LIQPAY = 'LiqPay';
+
+    protected $guarded = ['id'];
 
     protected $attributes = [
         'status' => self::STATUS_PENDING,
-        'type' => self::TYPE_CASH,
     ];
 
     public function model(): MorphTo
@@ -32,11 +32,6 @@ class Payment extends Model
         return $this->morphTo();
     }
 
-    /**
-     * @param string|null $columnKey
-     * @param string|null $indexKey
-     * @return array
-     */
     public static function statusesList(string $columnKey = null, string $indexKey = null, array $options = []): array
     {
         $records = [
@@ -50,29 +45,6 @@ class Payment extends Model
         return self::staticListBuild($records, $columnKey, $indexKey, $options);
     }
 
-    /**
-     * @param string|null $columnKey
-     * @param string|null $indexKey
-     * @return array
-     */
-    public static function typesList(string $columnKey = null, string $indexKey = null, array $options = []): array
-    {
-        $records = [
-            [
-                'key' => self::TYPE_CASH,
-                'name' => trans('lists.order_types.' . self::TYPE_CASH . '.name'),
-            ],
-
-        ];
-
-        return self::staticListBuild($records, $columnKey, $indexKey, $options);
-    }
-
-    /**
-     * @param string|null $columnKey
-     * @param string|null $indexKey
-     * @return array
-     */
     public static function systemsList(string $columnKey = null, string $indexKey = null, array $options = []): array
     {
         $records = [

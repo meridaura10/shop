@@ -2,17 +2,14 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\PurchaseRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PurchaseRequest;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Purchase;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
-use Illuminate\Http\Response;
-use Illuminate\View\View;
-use Intervention\Image\Colors\Rgb\Channels\Red;
 
 class PurchaseController extends Controller
 {

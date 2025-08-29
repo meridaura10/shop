@@ -2,8 +2,8 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\ArticleRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\ArticleRequest;
 use App\Models\Article;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -33,7 +33,9 @@ class ArticleController extends Controller
     {
         $this->authorize('create', Article::class);
 
-        $article = Article::create($request->validated());
+        $article = Article::create($request->getData());
+
+        $article->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
 
         $article->mediaManage($request);
 
@@ -51,9 +53,11 @@ class ArticleController extends Controller
     {
         $this->authorize('update', $article);
 
-        $article->update($request->validated());
+        $article->update($request->getData());
 
         $article->mediaManage($request);
+
+        $article->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
 
         return redirect()->route('admin.articles.edit', $article);
     }

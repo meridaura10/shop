@@ -10,13 +10,15 @@ use Maatwebsite\Excel\Concerns\WithHeadings;
 
 class ProductsExport implements FromCollection, WithHeadings, WithColumnWidths
 {
+    protected array $filters = [];
     /**
     * @return \Illuminate\Support\Collection
     */
     public function collection()
     {
         return Product::query()
-            ->with(['category', 'brand', 'characteristics.attribute', 'media'])
+            ->filter($this->filters)
+            ->with(['category', 'brand', 'characteristics.attribute', 'media', 'seo'])
             ->get()
             ->map(function (Product $product) {
                 return [
@@ -31,8 +33,16 @@ class ProductsExport implements FromCollection, WithHeadings, WithColumnWidths
                     'images'       => $this->getImageUrls($product),
                     'status'       => $product->status,
                     'quantity'     => $product->quantity,
+                    'seo' => $product->seo,
                 ];
             });
+    }
+
+    public function setFilters(array $filters): static
+    {
+        $this->filters = $filters;
+
+        return $this;
     }
 
     protected function formatAttributes(Product $product): string

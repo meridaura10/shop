@@ -4,17 +4,21 @@ namespace App\Models;
 
 use App\Models\Traits\Boot\HasSlug;
 use App\Models\Traits\HasStaticLists;
+use Fomvasss\Seo\Models\HasSeo;
 use Fomvasss\SimpleTaxonomy\Models\Traits\HasTaxonomies;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Fomvasss\MediaLibraryExtension\HasMedia\HasMedia;
+use Spatie\Image\Enums\Fit;
 use Spatie\MediaLibrary\MediaCollections\Models\Media;
 use Fomvasss\MediaLibraryExtension\HasMedia\InteractsWithMedia;
+
 class Article extends Model implements HasMedia
 {
     /** @use HasFactory<\Database\Factories\ArticleFactory> */
-    use HasFactory, HasStaticLists, InteractsWithMedia, HasSlug, HasTaxonomies;
+    use HasFactory, HasStaticLists, InteractsWithMedia, HasSlug, HasTaxonomies, HasSeo;
 
     const TYPE_NEWS = 'news';
 
@@ -30,9 +34,28 @@ class Article extends Model implements HasMedia
 
     protected $mediaMultipleCollections = ['images'];
 
+    public function registerSeoDefaultTags(): array
+    {
+        return [
+            'title' => $this->name,
+            'description' => $this->content,
+            'og_image' => $this->getFirstMediaUrl('images', 'thumb'),
+        ];
+    }
+
     public function category(): BelongsTo
     {
         return $this->term('category_id')->whereVocabulary(Term::VOCABULARY_ARTICLE_CATEGORIES);
+    }
+
+    public function scopeActive(Builder $builder): Builder
+    {
+        return $builder->where('status', self::STATUS_PUBLISHED);
+    }
+
+    public function scopeNews(Builder $builder): Builder
+    {
+        return $builder->where('type', self::TYPE_NEWS);
     }
 
     public static function typesList(string $columnKey = null, string $indexKey = null, array $options = []): array
@@ -68,8 +91,12 @@ class Article extends Model implements HasMedia
         $this->addMediaCollection('main')
             ->singleFile();
 
-        $this->addMediaConversion('table')
-            ->format('jpg')->quality(93)
-            ->fit('crop', 360, 257);
+        $this->addMediaConversion('preview')
+            ->format('webp')->quality(93)
+            ->fit(Fit::Contain, 360, 300);
+
+        $this->addMediaConversion('main')
+            ->format('webp')->quality(93)
+            ->fit(Fit::Contain, 600, 300);
     }
 }

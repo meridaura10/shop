@@ -22,16 +22,12 @@
 @include('lte3::layouts.inc.end')
 
 @push('scripts')
-    <!-- Summernote -->
 
-
-    <!-- CodeMirror -->
     <script src="/vendor/adminlte/plugins/codemirror/codemirror.js"></script>
     <script src="/vendor/adminlte/plugins/codemirror/mode/css/css.js"></script>
     <script src="/vendor/adminlte/plugins/codemirror/mode/xml/xml.js"></script>
     <script src="/vendor/adminlte/plugins/codemirror/mode/htmlmixed/htmlmixed.js"></script>
 
-    <!-- highlight.js -->
     <script src="/vendor/lte3/plugins/highlightjs/highlight.min.js"></script>
     <script src="/vendor/lte3/plugins/highlightjs/languages/php.min.js"></script>
 @endpush

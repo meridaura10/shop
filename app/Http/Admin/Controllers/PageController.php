@@ -2,10 +2,9 @@
 
 namespace App\Http\Admin\Controllers;
 
+use App\Http\Admin\Requests\PageRequest;
 use App\Http\Controllers\Controller;
-use App\Http\Requests\PageRequest;
 use App\Models\Page;
-use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
 
@@ -31,7 +30,9 @@ class PageController extends Controller
     {
         $this->authorize('create', Page::class);
 
-        $page = Page::create($request->validated());
+        $page = Page::create($request->getData());
+
+        $page->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
 
         return redirect()->route('admin.pages.edit', $page);
     }
@@ -47,7 +48,10 @@ class PageController extends Controller
     {
         $this->authorize('update', $page);
 
-        $page->update($request->validated());
+        $page->update($request->getData());
+
+        $page->seo()->updateOrCreate([], ['tags' => $request->getSeo()]);
+
 
         return redirect()->route('admin.pages.edit', $page);
     }

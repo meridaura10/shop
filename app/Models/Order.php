@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\contracts\PaymentRelationInterface;
 use App\Models\Traits\HasStaticLists;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -10,7 +11,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\MorphOne;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 
-class Order extends Model
+class Order extends Model implements PaymentRelationInterface
 {
     /** @use HasFactory<\Database\Factories\OrderFactory> */
     use HasFactory, HasStaticLists;
@@ -23,26 +24,26 @@ class Order extends Model
 
     const TYPE_ORDER = 'order';
 
-    const TYPE_BASKET = 'basket';
+    const TYPE_CART = 'basket';
 
     protected $guarded = ['id'];
 
     protected $attributes = [
-       'status' => self::STATUS_PENDING,
-       'type' => self::TYPE_BASKET,
+        'status' => self::STATUS_PENDING,
+        'type' => self::TYPE_CART,
     ];
 
     public function casts(): array
     {
         return [
-           'customer' => 'array',
+            'customer' => 'array',
             'address' => 'array',
         ];
     }
 
     public function user(): BelongsTo
     {
-      return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class);
     }
 
     public function purchases(): HasMany
@@ -80,8 +81,8 @@ class Order extends Model
     {
         $records = [
             [
-                'key' => self::TYPE_BASKET,
-                'name' => trans('lists.order_types.' . self::TYPE_BASKET . '.name'),
+                'key' => self::TYPE_CART,
+                'name' => trans('lists.order_types.' . self::TYPE_CART . '.name'),
             ],
             [
                 'key' => self::TYPE_ORDER,

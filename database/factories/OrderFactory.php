@@ -25,16 +25,13 @@ class OrderFactory extends Factory
         return [
             'status' => $status,
             'type' => $type,
-            'user_id' => User::query()->inRandomOrder()->first()->id,
             'customer' => [
                 'first_name' => $this->faker->firstName(),
                 'last_name' => $this->faker->lastName(),
                 'phone' => $this->faker->phoneNumber(),
                 'email' => $this->faker->email(),
             ],
-            'address' => [
-                'city' => $this->faker->city(),
-            ],
+            'address' => $this->faker->address(),
         ];
     }
 
@@ -45,6 +42,14 @@ class OrderFactory extends Factory
                ->inRandomOrder()
                ->take(fake()->numberBetween(1,10))
                ->get();
+
+           if ($order->type == Order::TYPE_CART) {
+               $userId = User::query()->inRandomOrder()->first()->id;
+
+               if (!Order::query()->where('user_id', $userId)->exists()) {
+                   $order->update(['user_id' => $userId]);
+               }
+           }
 
            foreach ($products as $product) {
                $order->purchases()->create([
