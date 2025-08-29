@@ -125,11 +125,14 @@ php artisan db:seed --class=PrimarySeeder
 php artisan db:seed --class=DummySeeder
 ```
 
-
 ### 10. запустити ngrok
-- Основні дані:
 ```bash
 ngrok http --domain=thankful-just-termite.ngrok-free.app --host-header=rewrite {$siteName:80}
+```
+
+### 11. для картинок
+```bash
+php artisan storage:link
 ```
 
 
