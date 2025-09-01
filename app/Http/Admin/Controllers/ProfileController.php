@@ -17,23 +17,23 @@ class ProfileController
         return view('admin.profile.edit', compact('user'));
     }
 
-    public function update(ProfileRequest $request, User $user): RedirectResponse
+    public function update(ProfileRequest $request): RedirectResponse
     {
         $data = $request->validated();
 
-        if($user->id != auth()->id()){
-            return redirect()->route('admin.profile.edit', $user);
-        }
+        $user = auth()->user();
 
-        $user->update([
-            'name' => $data['name'],
+        $userData = [
+            'name' => $data['name'] ?? '',
             'email' => $data['email'],
-            'phone' => $data['phone'],
-        ]);
+            'phone' => $data['phone'] ?? null,
+        ];
 
-        if($data['password']) {
-            $user->update(['password' => Hash::make($data['password'])]);
+        if(isset($data['password'])) {
+           $userData['password'] = Hash::make($data['password']);
         }
+
+        $user->update($userData);
 
         $user->mediaManage($request);
 

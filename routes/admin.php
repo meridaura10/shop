@@ -22,7 +22,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth')->group(function (){
    Route::prefix('/admin/profile')->middleware('admin')->controller(\App\Http\Admin\Controllers\ProfileController::class)->name('admin.profile.')->group(function (){
        Route::get('/edit/', 'edit')->name('edit');
-       Route::patch('/{user}/update', 'update')->name('update');
+       Route::patch('/update', 'update')->name('update');
    });
 });
 

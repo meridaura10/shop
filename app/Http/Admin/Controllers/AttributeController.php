@@ -12,7 +12,9 @@ class AttributeController extends Controller
 {
     public function index(): View
     {
-        $attributes = Attribute::query()->withCount(['characteristics', 'categories'])->paginate(15);
+        $attributes = Attribute::query()
+            ->withCount(['characteristics', 'categories'])
+            ->paginate(15);
 
         return view('admin.attributes.index', compact('attributes'));
     }
@@ -26,7 +28,7 @@ class AttributeController extends Controller
     {
         $categoryIds = $request->get('categories', []);
 
-        $attribute = Attribute::create($request->validated());
+        $attribute = Attribute::create($request->getData());
 
         $attribute->categories()->attach($categoryIds);
 
@@ -42,7 +44,7 @@ class AttributeController extends Controller
     {
         $categoryIds = $request->get('categories', []);
 
-        $attribute->update($request->validated());
+        $attribute->update($request->getData());
 
         $attribute->categories()->sync($categoryIds);
 

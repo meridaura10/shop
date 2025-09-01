@@ -16,7 +16,12 @@ class AttributeRequest extends FormRequest
         return [
             'name' => ['required', 'string', 'max:255'],
             'categories' => ['array'],
-            'categories.*' => ['integer', 'exists:terms,id'],
+            'categories.*' => ['string', 'exists:terms,id'],
         ];
+    }
+
+    public function getData(): array
+    {
+        return $this->only('name');
     }
 }

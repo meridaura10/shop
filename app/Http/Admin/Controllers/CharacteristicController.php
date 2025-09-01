@@ -13,7 +13,7 @@ class CharacteristicController extends Controller
 {
     public function store(CharacteristicRequest $request, Attribute $attribute): RedirectResponse
     {
-        $attribute->characteristics()->create($request->validated());
+        $attribute->characteristics()->create($request->getData());
 
         return redirect()->route('admin.attributes.edit',$attribute);
     }
@@ -27,7 +27,7 @@ class CharacteristicController extends Controller
 
     public function update(CharacteristicRequest $request, Characteristic $characteristic): RedirectResponse
     {
-        $characteristic->update($request->validated());
+        $characteristic->update($request->getData());
 
         return redirect()->route('admin.attributes.edit', $characteristic->attribute_id);
     }

@@ -12,7 +12,6 @@
                 'action' => route('admin.attributes.store'),
                 'files' => true,
                 'method' => 'post',
-                'class' => 'js-form-submit-file-changed',
                 'style' => 'display: inline-flex',
              ]) !!}
             <div class="card-body">

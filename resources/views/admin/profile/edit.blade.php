@@ -10,7 +10,7 @@
             </div>
 
             {!! Lte3::formOpen([
-                'action' => route('admin.profile.update', $user),
+                'action' => route('admin.profile.update'),
                 'files' => true,
                 'method' => 'patch',
                 'style' => 'display: inline-flex',

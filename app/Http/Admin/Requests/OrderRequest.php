@@ -18,7 +18,7 @@ class OrderRequest extends FormRequest
         return [
             'status' => ['required', Rule::in(Order::statusesList('key'))],
             'type' => ['required', Rule::in(Order::typesList('key'))],
-            'user_id' => ['required', Rule::exists('users', 'id')],
+            'user_id' => ['nullable', Rule::exists('users', 'id')],
             'customer' => ['required', 'array'],
             'customer.first_name' => ['nullable', 'string', 'max:255'],
             'customer.last_name' => ['nullable', 'string', 'max:255'],

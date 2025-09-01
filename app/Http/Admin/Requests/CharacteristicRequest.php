@@ -17,4 +17,9 @@ class CharacteristicRequest extends FormRequest
             'name' => ['required', 'string', 'max:255'],
         ];
     }
+
+    public function getData(): array
+    {
+        return $this->only('name');
+    }
 }

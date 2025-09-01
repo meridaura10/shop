@@ -35,9 +35,7 @@ class OrderController extends Controller
     {
         $this->authorize('update', $order);
 
-        $order->update([
-            ...$request->getData(),
-        ]);
+        $order->update($request->getData());
 
         if($request->status === Order::STATUS_CONFIRMED) {
             event(new ConfirmOrder($order));

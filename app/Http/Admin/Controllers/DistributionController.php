@@ -31,7 +31,7 @@ class DistributionController extends Controller
             'send_at' => $sendAt,
         ]);
 
-        return back();
+        return redirect()->back();
     }
 
     public function put(Request $request, Distribution $distribution): JsonResponse
