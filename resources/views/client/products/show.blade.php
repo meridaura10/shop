@@ -11,7 +11,7 @@
                     <ul class="nav nav-tabs" role="tablist">
                         @foreach($product->media as $key => $image)
                             <li class="nav-item">
-                                <a class="nav-link active" data-toggle="tab" href="#tabs-{{ $key }}" role="tab">
+                                <a class="nav-link @if($loop->first) active @endif" data-toggle="tab" href="#tabs-{{ $key }}" role="tab">
                                     <div class="product__thumb__pic set-bg" data-setbg="{{ $image->getUrl() }}">
                                     </div>
                                 </a>
@@ -22,7 +22,7 @@
                 <div class="col-lg-6 col-md-9">
                     <div class="tab-content">
                         @foreach($product->media as $key => $image)
-                            <div class="tab-pane active" id="tabs-{{ $key }}" role="tabpanel">
+                            <div class="tab-pane @if($loop->first) active @endif" id="tabs-{{ $key }}" role="tabpanel">
                                 <div class="product__details__pic__item">
                                     <img src="{{ $image->getUrl() }}" alt="{{ $product->name }}">
                                 </div>

@@ -21,9 +21,9 @@ class CartService
         $this->user = auth()->user();
     }
 
-    public function purchases(array $load = []): Collection
+    public function purchases(): Collection
     {
-        return $this->cart()->load($load)->purchases;
+        return $this->cart()->purchases;
     }
 
     public function clear(): static
@@ -38,8 +38,6 @@ class CartService
         if ($quantity < 1) {
             $quantity = 1;
         }
-
-        $quantity = $purchase->quantity + $quantity;
 
         if (!$this->checkQuantity($purchase->product, $quantity)) {
             return $this;
@@ -71,7 +69,7 @@ class CartService
             try {
                 $purchase = $this->cart()->purchases()->firstWhere('product_id', $product->id);
                 $purchase
-                    ? $this->updateQuantity($purchase, $quantity)
+                    ? $this->updateQuantity($purchase, $purchase->quantity + $quantity)
                     : $this->storePurchase($product, $quantity);
             } catch (\Throwable $throwable) {
                 dd($throwable);
@@ -81,16 +79,16 @@ class CartService
         return $this;
     }
 
-    public function load()
+    public function load(Order $order): Order
     {
-
+       return $order->load(['purchases.product', 'purchases.product.category', 'purchases.media']);
     }
 
     public function cart(): Order
     {
         if ($this->cart) {
 
-            return $this->cart;
+            return $this->load($this->cart);
         }
 
         $userCart = $this->getUserCart();
@@ -107,7 +105,7 @@ class CartService
             $cart = $this->storeCart();
         }
 
-        return $this->cart = $cart;
+        return $this->cart = $this->load($cart);
     }
 
     public function storePurchase(Product $product, int $quantity = 1): Purchase

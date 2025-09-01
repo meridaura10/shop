@@ -31,7 +31,13 @@
                                                 <img src="{{ $purchase->getFirstMediaUrl('image','preview') }}" alt="">
                                             </div>
                                             <div class="product__cart__item__text">
-                                                <h6>{{ $purchase->name }}</h6>
+                                                @if(isset($purchase->product?->category_id))
+                                                    <a href="{{ route('catalog.products.show', ['category' => $purchase->product->category_id, 'product' => $purchase->product->id]) }}">
+                                                        <h6>{{ $purchase->name }}</h6>
+                                                    </a>
+                                                    @else
+                                                    <h6>{{ $purchase->name }}</h6>
+                                                @endif
                                                 <h5>{{ $purchase->price }}грн</h5>
                                             </div>
                                         </td>

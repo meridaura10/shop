@@ -16,7 +16,7 @@ class CartController extends Controller
 {
     public function index(): View
     {
-        $purchases = cart()->purchases(['purchases.media' , 'purchases.product']);
+        $purchases = cart()->purchases();
 
         return view('client.cart.index', compact('purchases'));
     }

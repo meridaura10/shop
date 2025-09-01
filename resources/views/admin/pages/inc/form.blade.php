@@ -1,6 +1,8 @@
 
 {!! Lte3::text('name') !!}
 
+{!! Lte3::text('slug') !!}
+
 {!! Lte3::textarea('description', null, [
          'label' => 'Description',
          'rows' => 3,

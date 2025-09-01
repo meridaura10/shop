@@ -20,6 +20,7 @@ class PageRequest extends FormRequest
     {
         return [
             'name' => ['required', 'string', 'max:255'],
+            'slug' => ['nullable', 'string', 'max:255'],
             'description' => ['nullable', 'string', 'max:2048'],
             'status' => ['required', Rule::in(Page::statusesList('key'))],
             'content' => ['nullable', 'string'],
